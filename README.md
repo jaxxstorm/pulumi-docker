@@ -15,15 +15,15 @@ The following is a quick table comparing the image sizes when compressed:
 
 | Image | Size |
 | --- | --- |
-| *pulumi/pulumi* | ~725MB |
-| *jaxxstorm/pulumi:base.latest* | ~83MB |
-| *jaxxstorm/pulumi:go.latest* | ~206MB |
-| *jaxxstorm/pulumi:nodejs.latest* | ~120Mb |
-| *jaxxstorm/pulumi:dotnet.latest* | ~279Mb |
-| *jaxxstorm/pulumu:python.latest* | ~114MB |
+| **pulumi/pulumi** | ~725MB |
+| **jaxxstorm/pulumi:base.latest** | ~83MB |
+| **jaxxstorm/pulumi:go.latest** | ~206MB |
+| **jaxxstorm/pulumi:nodejs.latest** | ~120Mb |
+| **jaxxstorm/pulumi:dotnet.latest** | ~279Mb |
+| **jaxxstorm/pulumu:python.latest** | ~114MB |
 
 
-_Please note, while I'm currently an employee of Pulumi, this isn't currently officially support by Pulumi - use it at your own risk_
+**Please note, while I'm currently an employee of Pulumi, this isn't currently officially support by Pulumi - use it at your own risk**
 
 ## Images
 

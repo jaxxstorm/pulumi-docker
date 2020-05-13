@@ -20,5 +20,12 @@ FROM ubuntu:bionic
 WORKDIR /pulumi
 COPY --from=builder /root/.pulumi/bin bin
 
+RUN --mount=target=/var/lib/apt/lists,type=cache \
+    --mount=target=/var/cache/apt,type=cache \
+    apt-get update -y && \
+    apt-get install -y \
+    git \
+    ca-certificates
+
 ENV PATH "/pulumi/bin:${PATH}"
 ENTRYPOINT ["pulumi"]
