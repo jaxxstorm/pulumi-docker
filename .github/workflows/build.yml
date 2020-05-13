@@ -1,0 +1,61 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  base:
+    name: Build Base Image
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pulumi_version: ["latest", "2.1.1" ]
+    steps:
+      - uses: actions/checkout@master
+      - name: Build base image
+        uses: jaxxstorm/action-docker-build@additional-args
+        with:
+          repository: jaxxstorm/pulumi
+          buildkit: true
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          dockerfile: base/Dockerfile
+          additional-tags: base.${{ matrix.pulumi_version }}
+          build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}
+  sdk:
+    name: Build SDK Images
+    runs-on: ubuntu-latest
+    needs: base
+    strategy:
+      max-parallel: 6
+      fail-fast: false
+      matrix:
+        sdk: [ "nodejs", "python", "dotnet", "go" ]
+        pulumi_version: ["latest", "2.1.1" ]
+        include:
+          - sdk: go
+            runtime_version: "1.13.10"
+          - sdk: go
+            runtime_version: "1.14.2"
+          - sdk: nodejs
+            runtime_version: "13.14.0"
+          - sdk: dotnet
+            runtime_version: "13.14.0"
+          - sdk: python
+            runtime_version: "3.7.7"
+          - sdk: python
+            runtime_version: "3.8.2"
+    steps:
+      - uses: actions/checkout@master
+      - name: Build image
+        uses: jaxxstorm/action-docker-build@additional-args
+        with:
+          repository: jaxxstorm/pulumi
+          buildkit: true
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          dockerfile: ${{ matrix.sdk }}/Dockerfile
+          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version}}
+          build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}, RUNTIME_VERSION=${{ matrix.runtime_version }}

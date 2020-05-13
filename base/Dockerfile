@@ -1,8 +1,6 @@
 # syntax = docker/dockerfile:experimental
 FROM ubuntu:bionic AS builder
-
 ARG PULUMI_VERSION=latest
-
 RUN apt-get update -y && \
       apt-get install -y \
       curl \
@@ -13,7 +11,7 @@ RUN apt-get update -y && \
 RUN if [ "$PULUMI_VERSION" = "latest" ]; then \
     curl -fsSL https://get.pulumi.com/ | bash; \
   else \
-    curl -fsSL https://get.pulumi.com/ | bash -s -- --version $(echo $PULUMI_VERSION | cut -c 2-); \
+    curl -fsSL https://get.pulumi.com/ | bash -s -- --version $PULUMI_VERSION ; \
   fi
 
 # The runtime container
