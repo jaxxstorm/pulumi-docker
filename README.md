@@ -45,9 +45,23 @@ Images with the SDK runtimes are generated in the following format:
 jaxxstorm/pulumi:<sdk>.<pulumi_version>-<sdk_runtime_version>
 ```
 
+## Usage
+
+None of these images have `CMD` or entrypoint set, so you'll need to specify the commands you want to run, for example:
+
+```
+docker run -e PULUMI_ACCESS_TOKEN=<TOKEN> -v "$(pwd)":/pulumi/projects $IMG /bin/bash -c "npm ci && pulumi preview -s <stackname>"
+```
+
+This decision has been made to foster flexibility in both CI and local systems. 
+
+*This will probably changed based on feedback from the community*
+
+The `WORKDIR` is set to `/pulumi/projects`, so if you're using volumes, please mount your project there.
+
 ### Acknowledgements
 
-Thanks to @jen20 for the awesome docker build action
+Thanks to [@jen20](http://github.com/jen20) for the awesome docker build action
 
 
 
