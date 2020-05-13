@@ -22,7 +22,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: base/Dockerfile
-          additional-tags: base.${{ matrix.pulumi_version }}
+          additional-tags: base.${{ matrix.pulumi_version }}_${GITHUB_SHA::8}
           registry: docker.pkg.github.com
           build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}
   sdk:
@@ -58,6 +58,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: ${{ matrix.sdk }}/Dockerfile
-          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version}}
+          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version}}_${GITHUB_SHA::8}
           registry: docker.pkg.github.com
           build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}, RUNTIME_VERSION=${{ matrix.runtime_version }}
