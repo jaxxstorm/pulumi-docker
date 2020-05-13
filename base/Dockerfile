@@ -30,4 +30,4 @@ RUN --mount=target=/var/lib/apt/lists,type=cache \
     ca-certificates
 
 ENV PATH "/pulumi/bin:${PATH}"
-ENTRYPOINT ["pulumi"]
+CMD ["pulumi"]

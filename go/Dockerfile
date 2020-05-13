@@ -47,4 +47,4 @@ COPY --from=pulumi /pulumi/bin/pulumi-analyzer-policy /pulumi/bin/pulumi-languag
 ENV GOPATH=/go
 ENV PATH "/pulumi/bin:${PATH}"
 
-ENTRYPOINT ["pulumi"]
+CMD ["pulumi"]

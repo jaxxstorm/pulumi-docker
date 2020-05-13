@@ -44,4 +44,4 @@ COPY --from=pulumi /pulumi/bin/pulumi /pulumi/bin/pulumi
 COPY --from=pulumi /pulumi/bin/*-dotnet* /pulumi/bin/
 ENV PATH "/pulumi/bin:${PATH}"
 
-ENTRYPOINT ["pulumi"]
+CMD ["pulumi"]
