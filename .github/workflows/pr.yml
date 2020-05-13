@@ -1,9 +1,8 @@
-name: release build
+name: snapshot build
 on:
-  push:
+  pull_request:
     branches:
       - master
-
 jobs:
   base:
     name: Build Base Image
@@ -17,12 +16,13 @@ jobs:
       - name: Build base image
         uses: jaxxstorm/action-docker-build@release/v3.beta
         with:
-          repository: jaxxstorm/pulumi
+          repository: docker.pkg.github.com/jaxxstorm/pulumi-docker/pulumi
           buildkit: true
           username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: base/Dockerfile
-          additional-tags: base.${{ matrix.pulumi_version }}
+          additional-tags: base.${{ matrix.pulumi_version }}_${{ github.sha }}
+          registry: docker.pkg.github.com
           build-args: PULUMI_VERSION=${{ matrix.pulumi_version }}
   sdk:
     name: Build SDK Images
@@ -40,9 +40,9 @@ jobs:
           - sdk: go
             runtime_version: "1.14.2"
           - sdk: nodejs
-            runtime_version: "13.14.0"
-          - sdk: nodejs
             runtime_version: "12.16.3"
+          - sdk: nodejs
+            runtime_version: "13.14.0"
           - sdk: dotnet
             runtime_version: "3.1"
           - sdk: python
@@ -54,10 +54,11 @@ jobs:
       - name: Build image
         uses: jaxxstorm/action-docker-build@release/v3.beta
         with:
-          repository: jaxxstorm/pulumi
+          repository: docker.pkg.github.com/jaxxstorm/pulumi-docker/pulumi
           buildkit: true
           username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: ${{ matrix.sdk }}/Dockerfile
-          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version }}
+          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version}}_${{ github.sha }}
+          registry: docker.pkg.github.com
           build-args: PULUMI_VERSION=${{ matrix.pulumi_version }}, RUNTIME_VERSION=${{ matrix.runtime_version }}
