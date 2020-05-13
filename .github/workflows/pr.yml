@@ -23,7 +23,7 @@ jobs:
           dockerfile: base/Dockerfile
           additional-tags: base.${{ matrix.pulumi_version }}_${{ env.GITHUB_SHA }}
           registry: docker.pkg.github.com
-          build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}
+          build-args: PULUMI_VERSION=${{ matrix.pulumi_version }}
   sdk:
     name: Build SDK Images
     runs-on: ubuntu-latest
@@ -59,4 +59,4 @@ jobs:
           dockerfile: ${{ matrix.sdk }}/Dockerfile
           additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version}}_${{ env.GITHUB_SHA }}
           registry: docker.pkg.github.com
-          build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}, RUNTIME_VERSION=${{ matrix.runtime_version }}
+          build-args: PULUMI_VERSION=${{ matrix.pulumi_version }}, RUNTIME_VERSION=${{ matrix.runtime_version }}

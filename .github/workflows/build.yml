@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           dockerfile: base/Dockerfile
           additional-tags: base.${{ matrix.pulumi_version }}
-          build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}
+          build-args: PULUMI_VERSION=${{ matrix.pulumi_version }}
   sdk:
     name: Build SDK Images
     runs-on: ubuntu-latest
@@ -57,5 +57,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           dockerfile: ${{ matrix.sdk }}/Dockerfile
-          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version}}
-          build-args: PULUMI_VERSION=${{ matrix.pulumi_versions }}, RUNTIME_VERSION=${{ matrix.runtime_version }}
+          additional-tags: ${{ matrix.sdk }}.${{ matrix.pulumi_version }}-${{ matrix.runtime_version }}
+          build-args: PULUMI_VERSION=${{ matrix.pulumi_version }}, RUNTIME_VERSION=${{ matrix.runtime_version }}
