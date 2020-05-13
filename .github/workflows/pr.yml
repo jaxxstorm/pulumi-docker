@@ -40,7 +40,7 @@ jobs:
           - sdk: go
             runtime_version: "1.14.2"
           - sdk: nodejs
-            runtime_version: "13.14.0"
+            runtime_version: "12.16.3"
           - sdk: dotnet
             runtime_version: "3.1"
           - sdk: python
