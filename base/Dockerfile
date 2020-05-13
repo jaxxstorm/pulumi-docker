@@ -1,7 +1,8 @@
 # syntax = docker/dockerfile:experimental
-FROM ubuntu:bionic AS builder
+FROM debian:buster-slim AS builder
 ARG PULUMI_VERSION=latest
 RUN apt-get update -y && \
+      apt-get upgrade -y && \
       apt-get install -y \
       curl \
       git \
@@ -16,13 +17,14 @@ RUN if [ "$PULUMI_VERSION" = "latest" ]; then \
 
 # The runtime container
 # This is our base container, so let's copy all the runtimes to .pulumi/bin
-FROM ubuntu:bionic
+FROM debian:buster-slim
 WORKDIR /pulumi
 COPY --from=builder /root/.pulumi/bin bin
 
 RUN --mount=target=/var/lib/apt/lists,type=cache \
     --mount=target=/var/cache/apt,type=cache \
     apt-get update -y && \
+    apt-get upgrade -y && \
     apt-get install -y \
     git \
     ca-certificates
