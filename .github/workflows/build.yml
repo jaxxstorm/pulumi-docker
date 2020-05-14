@@ -1,5 +1,7 @@
 name: release build
 on:
+  schedule:
+    - cron:  '* 0 * * *'
   push:
     branches:
       - master
@@ -11,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pulumi_version: ["latest", "2.1.1" ]
+        pulumi_version: ["latest", "2.2.1" ]
     steps:
       - uses: actions/checkout@master
       - name: Build base image
@@ -33,7 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         sdk: [ "nodejs", "python", "dotnet", "go" ]
-        pulumi_version: ["latest", "2.1.1" ]
+        pulumi_version: ["latest", "2.2.1" ]
         include:
           - sdk: go
             runtime_version: "1.13.10"
